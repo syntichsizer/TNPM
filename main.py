@@ -7,6 +7,9 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
+from tensorflow.keras.preprocessing import image_dataset_from_directory
+
+tf.config.experimental.list_physical_devices('GPU') 
 
 # Download stanford_dogs images
 
@@ -234,3 +237,19 @@ print(
     "This image most likely belongs to {} with a {:.2f} percent confidence."
     .format(class_names[np.argmax(score)], 100 * np.max(score))
 )
+
+# Let's use Transfer learning! :)
+# Create the base model from the pre-trained model MobileNet V2
+img_shape = (img_height, img_width) + (3,)
+
+base_model = tf.keras.applications.MobileNetV2(input_shape=img_shape,
+                                               include_top=False,
+                                               weights='imagenet')
+
+# This feature extractor converts each 160x160x3 image
+# into a 5x5x1280 block of features. Let's see what it
+# does to an example batch of images:
+
+image_batch, label_batch = next(iter(train_ds))
+feature_batch = base_model(image_batch)
+print(feature_batch.shape)
