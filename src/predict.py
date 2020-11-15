@@ -28,9 +28,6 @@ img = keras.preprocessing.image.load_img(
     path, target_size=(160, 160)
 )
 
-img = keras.preprocessing.image.load_img(
-    path, target_size=(160, 160)
-)
 img_array = keras.preprocessing.image.img_to_array(img)
 img_array = tf.expand_dims(img_array, 0)  # Create a batch
 

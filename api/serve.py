@@ -4,6 +4,8 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 
+from flask import jsonify
+
 
 def get_model_api():
 
@@ -29,9 +31,6 @@ def get_model_api():
             path, target_size=(160, 160)
         )
 
-        img = keras.preprocessing.image.load_img(
-            path, target_size=(160, 160)
-        )
         img_array = keras.preprocessing.image.img_to_array(img)
         img_array = tf.expand_dims(img_array, 0)  # Create a batch
 
@@ -40,5 +39,18 @@ def get_model_api():
         predictions = model.predict(img_array)
         score = tf.nn.softmax(predictions[0])
 
-        return str({"url": url, "prediction": np.argmax(score), "prediction_name:": class_names[np.argmax(score)], "score": np.max(score)})
+        # Clean predicted class name
+        # e.g. convert 'n02099601-golden_retriever' to 'Golden retriever'
+        name = class_names[np.argmax(score)]
+        name = name.split('-')[1].replace('_', ' ')
+        # make first letter capital
+        prediction_name = name[0].upper() + name[1:]
+
+        return jsonify(
+            url=url,
+            prediction=str(np.argmax(score)),
+            prediction_name=prediction_name,
+            score=str(np.max(score))
+        )
+
     return model_api
