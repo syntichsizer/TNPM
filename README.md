@@ -1,6 +1,6 @@
 # TNPM
 
-## About 
+## About
 
 Project for the Advanced programming in Python course @ TVZ Zagreb.
 
@@ -18,12 +18,11 @@ On Windows:
 
 `$ py -3.8 -m venv env`
 
-
 ### Activating a virtual environment
 
 Before you can start installing or using packages in venv you will need to activate it.
 
-On macOS and Linux: 
+On macOS and Linux:
 
 `$ source env/bin/activate`
 
@@ -31,9 +30,8 @@ On Windows:
 
 `$ .\env\Scripts\activate`
 
-
 ### Installing required packages
 
-Now that you are in virtual environment you can install required packages for this project. 
+Now that you are in virtual environment you can install required packages for this project.
 
 `(env) $ pip install -r modules.txt`
