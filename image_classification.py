@@ -50,7 +50,14 @@ val_ds = tf.keras.preprocessing.image_dataset_from_directory(
 
 class_names = train_ds.class_names
 print("We have", len(class_names), "classes:")
-print(len(class_names))
+print(class_names)
+
+# We can save classes to file for later use
+file = open("class_names", "wb")
+# save array to the file
+np.save(file, class_names)
+# close the file
+file.close
 
 
 # Configure the dataset for performance

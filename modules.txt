@@ -3,3 +3,4 @@ tensorflow
 numpy
 pillow
 matplotlib
+flask
