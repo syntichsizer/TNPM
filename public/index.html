@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title></title>
 
     <link rel="stylesheet" href="https://unpkg.com/chota@latest">
 
@@ -21,7 +21,7 @@
             <input id="input_image_url" onpaste="call_api()" type="text" placeholder="Zalijepi URL slike"
                 style="width: 50%;">
 
-            <p id="rezultat" style="margin-top: 2em; color: green;"></p>
+            <section id="rezultat" style="margin-top: 2em; color: green;"></section>
         </figure>
 
     </main>
@@ -39,7 +39,11 @@
                 .then(response => response.json())
                 .then(data => {
                     let accuracy_percent = Math.round(parseFloat(data.score) * 100);
-                    rezultat.textContent = `Tvoj pas je ${data.prediction_name} pasmina sa sigurnošću od ${accuracy_percent} %.`;
+                    let dog_slug = data.prediction_name.split(' ').join('-').toLowerCase();
+                    let dog_a_element = `<a href="https://www.akc.org/dog-breeds/${dog_slug}/">${data.prediction_name}</a>`;
+                    rezultat.innerHTML = `
+                        <p>Tvoj pas je ${dog_a_element} pasmina sa sigurnošću od ${accuracy_percent} %.</p>
+                        <img src="${data.url}" alt="${data.prediction_name}">`;
                 });
         }, 0)
     }
